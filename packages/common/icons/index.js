@@ -4,3 +4,4 @@ export { default as MarkdownIcon } from './markdown.svg';
 export { default as OneNoteIcon } from './onenote.svg';
 export { default as PatreonIcon } from './patreon.svg';
 export { default as PaypalIcon } from './paypal.svg';
+export { default as ObsidianIcon } from './obsidian.svg';

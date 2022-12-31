@@ -132,6 +132,9 @@
   "options_page_evernote_tooltip": {
     "message": "Send notes to Evernote"
   },
+  "options_page_obsidian_tooltip": {
+    "message": "Send notes to Obsidian"
+  },
   "options_page_googledocs_tooltip": {
     "message": "Send notes to Google Docs"
   },
