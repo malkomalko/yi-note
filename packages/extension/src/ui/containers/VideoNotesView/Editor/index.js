@@ -35,6 +35,25 @@ const Editor = () => {
     page: { saveNote }
   } = useStoreActions(actions => actions);
 
+  const handleKeyPress = React.useCallback((event) => {
+    if (event.key === 'Escape') {
+      reset();
+    }
+    if (event.key === 'Enter' && event.ctrlKey) {
+      handleSave();
+    }
+  }, [note]);
+
+  React.useEffect(() => {
+    // attach the event listener
+    document.addEventListener('keydown', handleKeyPress);
+
+    // remove the event listener
+    return () => {
+      document.removeEventListener('keydown', handleKeyPress);
+    };
+  }, [handleKeyPress]);
+
   const handleFocus = async () => {
     const player = await PlayerFactory.getPlayer();
     if (settings[KEY_PAUSE_VIDEO_WHEN_EDITING]) {
@@ -51,7 +70,7 @@ const Editor = () => {
     player.play();
   };
 
-  const handleSave = () => {
+  function handleSave() {
     const { content = '' } = note;
     if (content.trim()) {
       // Upsert note
