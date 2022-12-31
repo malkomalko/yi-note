@@ -24,6 +24,11 @@
     ],
     "persistent": true
   },
+  "commands": {
+    "toggleShow": {
+      "description": "Toggle Show/Hide"
+    }
+  },
   "content_scripts": [
     {
       "matches": [

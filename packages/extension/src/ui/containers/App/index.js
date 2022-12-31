@@ -75,18 +75,26 @@ const App = () => {
 
   useEffect(() => {
     // Register message listener
+    const listener = (request) => {
+      const { action } = request;
+      switch (action) {
+        case 'togglePanel':
+          setOpen(!open);
+          return;
+        case 'toggleShow':
+          return;
+      }
+    };
+
     if (typeof browser !== 'undefined') {
-      browser.runtime.onMessage.addListener(request => {
-        const { action } = request;
-        switch (action) {
-          case 'togglePanel':
-            setOpen(!open);
-            return;
-        }
-      });
+      browser.runtime.onMessage.addListener(listener);
     }
+
+    return () => {
+      browser.runtime.onMessage.removeListener(listener);
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [open]);
 
   useEffect(() => {
     if (typeof browser !== 'undefined') {
