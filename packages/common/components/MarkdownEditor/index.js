@@ -50,14 +50,13 @@ const MarkdownEditor = ({
   content = '',
   placeholder,
   onChange,
-  onHandlePauseVideo,
   onHandleUnPauseVideo,
-  ...rest
+  onFocus,
 }) => {
   const { t } = useTranslation('editor');
   const [mode, setMode] = useState(EDIT_MODE_WRITE);
   const {
-    app: { open }
+    app: { open, hidden }
   } = useStoreState(state => state);
 
   const EDIT_MODES = [
@@ -77,12 +76,18 @@ const MarkdownEditor = ({
   useEffect(() => {
     if (open && mdInput.current) {
       mdInput.current.focus();
-      onHandlePauseVideo();
+      onFocus();
     }
     if (!open) {
       onHandleUnPauseVideo();
     }
   }, [open, mdInput]);
+
+  useEffect(() => {
+    if (!hidden && mdInput.current) {
+      mdInput.current.focus();
+    }
+  }, [hidden, mdInput]);
 
   const handleOpenMarkdownGuide = () => {
     window.open(
@@ -134,7 +139,6 @@ const MarkdownEditor = ({
             placeholder={placeholder}
             value={content}
             onChange={handleValueChange}
-            {...rest}
           />
         ) : (
           <MarkdownViewer content={content} />
