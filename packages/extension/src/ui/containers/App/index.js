@@ -32,6 +32,7 @@ const App = () => {
   const history = useHistory();
   const { pathname } = useLocation();
   const [progress, setProgress] = useState(false);
+  const [hidden, setHidden] = useState(false);
 
   const onShowingAd = useCallback(() => setShowingAd(true), [setShowingAd]);
   const onHidingAd = useCallback(() => setShowingAd(false), [setShowingAd]);
@@ -80,8 +81,14 @@ const App = () => {
       switch (action) {
         case 'togglePanel':
           setOpen(!open);
+          if (!open) {
+            setHidden(false);
+          }
           return;
         case 'toggleShow':
+          if (open) {
+            setHidden(!hidden);
+          }
           return;
       }
     };
@@ -94,7 +101,7 @@ const App = () => {
       browser.runtime.onMessage.removeListener(listener);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [open]);
+  }, [open, hidden]);
 
   useEffect(() => {
     if (typeof browser !== 'undefined') {
@@ -126,7 +133,7 @@ const App = () => {
   }, [getPlayer, history, open, pathname]);
 
   return (
-    <StyledDrawer open={open} className={open && 'panel-shadow'}>
+    <StyledDrawer open={open} className={`${open ? 'panel-shadow' : ''} ${hidden ? 'panel-hidden' : ''}`}>
       <Grid container>
         <Header />
         <StyledViewWrapper>

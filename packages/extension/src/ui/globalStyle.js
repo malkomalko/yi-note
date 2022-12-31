@@ -17,4 +17,7 @@ export default createGlobalStyle`
     box-shadow: -6px 9px 11px -2px rgba(0,0,0,0.75);
     transform: translateX(0) !important;
   }
+  .${APP_ID} .panel-hidden {
+    display: none;
+  }
 `;
