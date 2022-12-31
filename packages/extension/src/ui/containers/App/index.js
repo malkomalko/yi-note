@@ -22,17 +22,16 @@ import {
 
 const App = () => {
   const {
-    app: { open, url },
+    app: { hidden, open, url },
     settings: { data: settings }
   } = useStoreState(state => state);
   const {
-    app: { setOpen, setUrl, setShowingAd },
+    app: { setHidden, setOpen, setUrl, setShowingAd },
     settings: { fetchSettings }
   } = useStoreActions(actions => actions);
   const history = useHistory();
   const { pathname } = useLocation();
   const [progress, setProgress] = useState(false);
-  const [hidden, setHidden] = useState(false);
 
   const onShowingAd = useCallback(() => setShowingAd(true), [setShowingAd]);
   const onHidingAd = useCallback(() => setShowingAd(false), [setShowingAd]);
@@ -81,8 +80,8 @@ const App = () => {
       switch (action) {
         case 'togglePanel':
           setOpen(!open);
-          if (!open) {
-            setHidden(false);
+          if (!open && hidden) {
+            setHidden(!hidden);
           }
           return;
         case 'toggleShow':
