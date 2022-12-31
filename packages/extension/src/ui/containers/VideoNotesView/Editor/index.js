@@ -28,6 +28,7 @@ const Editor = () => {
     settings: { data: settings }
   } = useStoreState(state => state);
   const {
+    app: { setOpen },
     videoNotes: {
       editor: { setNote, reset },
       edit
@@ -38,9 +39,11 @@ const Editor = () => {
   const handleKeyPress = React.useCallback((event) => {
     if (event.key === 'Escape') {
       reset();
+      setOpen(false);
     }
     if (event.key === 'Enter' && event.ctrlKey) {
       handleSave();
+      setOpen(false);
     }
   }, [note]);
 
