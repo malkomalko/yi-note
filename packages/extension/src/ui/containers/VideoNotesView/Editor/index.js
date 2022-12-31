@@ -30,8 +30,7 @@ const Editor = () => {
   const {
     videoNotes: {
       editor: { setNote, reset },
-      edit,
-      support: { setOpen: setSupportOpen }
+      edit
     },
     page: { saveNote }
   } = useStoreActions(actions => actions);
@@ -76,12 +75,7 @@ const Editor = () => {
       // TODO: load count from state store
       StorageService.getStorage()
         .getNotes()
-        .then(notes => {
-          const count = notes.length;
-          if (count && count % 50 === 0) {
-            setSupportOpen(true);
-          }
-        });
+        .then(notes => {});
     }
   };
 
