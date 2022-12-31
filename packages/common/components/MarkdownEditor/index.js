@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import { useStoreState, useStoreActions } from 'easy-peasy';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
@@ -53,6 +54,9 @@ const MarkdownEditor = ({
 }) => {
   const { t } = useTranslation('editor');
   const [mode, setMode] = useState(EDIT_MODE_WRITE);
+  const {
+    app: { open }
+  } = useStoreState(state => state);
 
   const EDIT_MODES = [
     { key: EDIT_MODE_WRITE, value: t('mode.write') },
@@ -65,6 +69,14 @@ const MarkdownEditor = ({
     const { value } = e.target;
     onChange(value);
   };
+
+  const mdInput = useRef(null);
+
+  useEffect(() => {
+    if (open && mdInput.current) {
+      mdInput.current.focus();
+    }
+  }, [open, mdInput]);
 
   const handleOpenMarkdownGuide = () => {
     window.open(
@@ -111,6 +123,7 @@ const MarkdownEditor = ({
       <StyledTextArea item container>
         {mode === EDIT_MODE_WRITE ? (
           <textarea
+            ref={mdInput}
             disabled={disabled}
             placeholder={placeholder}
             value={content}
