@@ -11,14 +11,12 @@ const getManifestPlugin = env => {
   const seed = commonManifest;
   if (env === 'chromium') {
     seed.options_page = 'options.html';
-    seed.browser = 'chromium';
   } else {
     // Use web extension standard as fallback
     seed.options_ui = {
       page: 'options.html',
       browser_style: true
     };
-    seed.browser = 'firefox';
     seed.permissions.push('downloads');
     seed.permissions.push('<all_urls>');
   }

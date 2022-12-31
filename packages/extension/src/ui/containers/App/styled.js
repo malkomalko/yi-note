@@ -13,7 +13,7 @@ export const StyledDrawer = styled.div`
   overflow: hidden;
   z-index: ${props => props.theme.panel.zIndex};
   transition: transform 0.3s;
-  transform: ${props => (props.open ? 'translateX(0)' : 'translateX(100%)')};
+  transform: translateX(100%);
 
   ::-webkit-scrollbar {
     width: 0;
