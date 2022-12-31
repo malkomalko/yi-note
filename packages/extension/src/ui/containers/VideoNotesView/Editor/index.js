@@ -51,6 +51,22 @@ const Editor = () => {
     edit({ timestamp, image: dataUri });
   };
 
+  const handlePauseVideo = async () => {
+    const player = await PlayerFactory.getPlayer();
+    if (settings[KEY_PAUSE_VIDEO_WHEN_EDITING]) {
+      player.pause();
+    }
+    const timestamp = await player.getCurrentTime();
+    const videoEl = player.getVideoElement();
+    const dataUri = await takeScreenshot(videoEl);
+    edit({ timestamp, image: dataUri });
+  };
+
+  const handleUnPauseVideo = async () => {
+    const player = await PlayerFactory.getPlayer();
+    player.play();
+  };
+
   const handleSave = () => {
     const { content = '' } = note;
     if (content.trim()) {
@@ -82,6 +98,8 @@ const Editor = () => {
           placeholder={t('editor.placeholder')}
           onChange={handleChange}
           onFocus={handleFocus}
+          onHandlePauseVideo={handlePauseVideo}
+          onHandleUnPauseVideo={handleUnPauseVideo}
         />
       </Grid>
       {active && (

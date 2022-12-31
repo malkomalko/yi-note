@@ -50,6 +50,8 @@ const MarkdownEditor = ({
   content = '',
   placeholder,
   onChange,
+  onHandlePauseVideo,
+  onHandleUnPauseVideo,
   ...rest
 }) => {
   const { t } = useTranslation('editor');
@@ -75,6 +77,10 @@ const MarkdownEditor = ({
   useEffect(() => {
     if (open && mdInput.current) {
       mdInput.current.focus();
+      onHandlePauseVideo();
+    }
+    if (!open) {
+      onHandleUnPauseVideo();
     }
   }, [open, mdInput]);
 
