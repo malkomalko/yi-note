@@ -44,16 +44,17 @@ ${meta.url}
 
 `
     for (let note of notes) {
+      data += `### ${secondsToTime(note.timestamp)}\n`
       data += `<img src="${note.image}"/>\n`
       data += `\`\`\`timestamp
 ${secondsToTime(note.timestamp)}
 \`\`\`
 `
-      data += note.content + '\n';
+      data += note.content + '\n\n';
     }
 
     if (topics && topics.length) {
-      data += '\n## Topics\n'
+      data += '---\n\n## Topics\n'
       topics.forEach(topic => {
         data += `- ${topic}\n`
       })
