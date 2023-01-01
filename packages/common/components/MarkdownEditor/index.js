@@ -78,7 +78,7 @@ const MarkdownEditor = ({
       mdInput.current.focus();
       onFocus();
     }
-    if (!open) {
+    if (!open && onHandleUnPauseVideo) {
       onHandleUnPauseVideo();
     }
   }, [open, mdInput]);
