@@ -22,7 +22,7 @@ export const StyledExpandMoreIcon = styled(ExpandIcon)`
 `;
 
 export const StyledSummary = styled.div`
-  max-width: 200px;
+  max-width: 315px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

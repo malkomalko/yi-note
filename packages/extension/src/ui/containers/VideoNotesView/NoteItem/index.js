@@ -29,9 +29,6 @@ const NoteItem = ({ note }) => {
     alerts: { show: showAlerts },
     page: { removeNote }
   } = useStoreActions(actions => actions);
-  const [expanded, setExpanded] = useState(false);
-
-  const handleExpand = () => setExpanded(!expanded);
 
   const handlePlay = async () => {
     const player = await PlayerFactory.getPlayer();
@@ -69,24 +66,9 @@ const NoteItem = ({ note }) => {
             <StyledSummary>{Markdown.toText(content)}</StyledSummary>
           </Grid>
         </Grid>
-        <Grid item>
-          <Grid container direction="row" alignItems="center">
-            {!expanded && <StyledTimestamp>{formattedTime}</StyledTimestamp>}
-            <IconButton
-              tooltip={
-                expanded ? t('note.collapse.tooltip') : t('note.expand.tooltip')
-              }
-              onClick={handleExpand}
-            >
-              <StyledExpandMoreIcon
-                expanded={expanded ? expanded : undefined}
-              />
-            </IconButton>
-          </Grid>
-        </Grid>
       </StyledMainRow>
       <StyledExpandedSection
-        expanded={expanded ? expanded : undefined}
+        expanded={true}
         item
         direction="column"
         container
