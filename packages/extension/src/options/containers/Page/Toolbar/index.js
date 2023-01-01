@@ -97,7 +97,11 @@ const Toolbar = () => {
 
   const handleObsidianExport = () => {
     const data = MarkdownService.pagesToMarkdown([{ meta, notes }]);
-    const url = 'obsidian://share?title=' + encodeURI(meta.title) + '&data=' + btoa(data);
+    const title = meta.title.replaceAll(/[^a-zA-Z0-9-_. ]/g, '').trim()
+    const url = 'obsidian://new?file=' +
+      encodeURI(`video-notes/${title}`) +
+      '&overwrite=true' +
+      '&content=' + encodeURIComponent(data);
     window.open(url, '_blank');
   };
 

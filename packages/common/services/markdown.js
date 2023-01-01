@@ -14,22 +14,29 @@ class Markdown {
   }
 
   static pagesToMarkdown(pages) {
-    let data = `<!-- ${browser.i18n.getMessage(
-      'services_template_signature',
-      `<a href="${INSTALLATION_URL}">YiNote</a>`
-    )} -->\n\n`;
+    const { meta, notes } = pages[0];
+    const date = new Date().toISOString().split('T')[0];
+    const title = meta.title.replaceAll(/[^a-zA-Z0-9-_. ]/g, '').trim()
+    let data = `---
+type: video
+tags: video-notes
+title: ${title}
+createdOn: ${date}
+updatedOn: ${date}
+---
 
-    for (let page of pages) {
-      const { meta, notes } = page;
-      data += `# [${meta.title}](${meta.url})\n\n`;
-
-      for (let note of notes) {
-        data += `## [${secondsToTime(note.timestamp)}](${buildAutoSeekUrl(
-          meta.url,
-          note.timestamp
-        )})\n\n`;
-        data += note.content + '\n\n';
-      }
+## Notes
+\`\`\`timestamp-url
+${meta.url}
+\`\`\`
+---
+`
+    for (let note of notes) {
+      data += `\`\`\`timestamp
+${secondsToTime(note.timestamp)}
+\`\`\`
+`
+      data += note.content + '\n';
     }
 
     return data;
