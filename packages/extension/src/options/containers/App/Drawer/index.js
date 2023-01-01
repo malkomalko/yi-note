@@ -17,15 +17,11 @@ import {
 import {
   Bookmarks as BookmarksIcon,
   Settings as SettingsIcon,
-  Help as HelpIcon,
-  GitHub as GitHubIcon,
-  BugReport as BugReportIcon
+  Help as HelpIcon
 } from '@material-ui/icons';
 import {
   APP_ID,
-  GITHUB_URL,
-  FAQ_URL,
-  ISSUE_URL
+  FAQ_URL
 } from '@yi-note/common/constants';
 import { getVersion } from '@yi-note/common/utils';
 import { drawerWidth, headerHeight } from '../constants';
@@ -113,18 +109,6 @@ const ResponsiveDrawer = () => {
             <HelpIcon />
           </ListItemIcon>
           <ListItemText primary={t('faq')} />
-        </ListItem>
-        <ListItem button onClick={() => window.open(ISSUE_URL, '_blank')}>
-          <ListItemIcon>
-            <BugReportIcon />
-          </ListItemIcon>
-          <ListItemText primary={t('issues')} />
-        </ListItem>
-        <ListItem button onClick={() => window.open(GITHUB_URL, '_blank')}>
-          <ListItemIcon>
-            <GitHubIcon />
-          </ListItemIcon>
-          <ListItemText primary={t('github')} />
         </ListItem>
       </List>
       <Divider />

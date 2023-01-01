@@ -90,23 +90,14 @@
   "searchView_tab_notes": {
     "message": "Notes"
   },
-  "footer_github_tooltip": {
-    "message": "Visit GitHub repository"
-  },
   "footer_management_tooltip": {
     "message": "Open management page"
   },
   "options_appName": {
     "message": "YiNote"
   },
-  "options_github": {
-    "message": "Visit Repository"
-  },
   "options_faq": {
     "message": "FAQs"
-  },
-  "options_issues": {
-    "message": "Report Issues"
   },
   "options_bookmarks_title": {
     "message": "Bookmarks"
