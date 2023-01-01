@@ -18,15 +18,12 @@ class Markdown {
     console.log(meta);
     const date = new Date().toISOString().split('T')[0];
     const topics = (meta.keywords || [])
-      .map(keyword => `"${keyword.replaceAll(/[^a-zA-Z0-9-_. ]/g, '').trim()}"`)
-      .join(', ')
-      .trim();
+      .map(keyword => keyword.replaceAll(/[^a-zA-Z0-9-_. ]/g, '').trim())
     const title = meta.title.replaceAll(/[^a-zA-Z0-9-_. ]/g, '').trim();
     let data = `---
 type: video
 tags: video-notes
 title: ${title}
-topics: [${topics}]
 createdOn: ${date}
 updatedOn: ${date}
 ---
@@ -53,6 +50,13 @@ ${secondsToTime(note.timestamp)}
 \`\`\`
 `
       data += note.content + '\n';
+    }
+
+    if (topics && topics.length) {
+      data += '\n## Topics\n'
+      topics.forEach(topic => {
+        data += `- ${topic}\n`
+      })
     }
 
     return data;
