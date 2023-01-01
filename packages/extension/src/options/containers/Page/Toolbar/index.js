@@ -100,7 +100,7 @@ const Toolbar = () => {
     const title = meta.title.replaceAll(/[^a-zA-Z0-9-_. ]/g, '').trim()
     const url = 'obsidian://new?file=' +
       encodeURI(`video-notes/${title}`) +
-      '&overwrite=true' +
+      '&overwrite=true&silent=true' +
       '&content=' + encodeURIComponent(data);
     window.open(url, '_blank');
   };
