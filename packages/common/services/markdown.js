@@ -15,23 +15,39 @@ class Markdown {
 
   static pagesToMarkdown(pages) {
     const { meta, notes } = pages[0];
+    console.log(meta);
     const date = new Date().toISOString().split('T')[0];
-    const title = meta.title.replaceAll(/[^a-zA-Z0-9-_. ]/g, '').trim()
+    const topics = (meta.keywords || [])
+      .map(keyword => `"${keyword.replaceAll(/[^a-zA-Z0-9-_. ]/g, '').trim()}"`)
+      .join(', ')
+      .trim();
+    const title = meta.title.replaceAll(/[^a-zA-Z0-9-_. ]/g, '').trim();
     let data = `---
 type: video
 tags: video-notes
 title: ${title}
+topics: [${topics}]
 createdOn: ${date}
 updatedOn: ${date}
 ---
 
-## Notes
-\`\`\`timestamp-url
+## Summary
+`
+    if (meta.image?.length) {
+      data += `\n![](${meta.image})\n\n`;
+    }
+    if (meta.description?.length) {
+      data += meta.description.trim() + '\n\n';
+    }
+    data += `\`\`\`timestamp-url
 ${meta.url}
 \`\`\`
----
+
+## Notes
+
 `
     for (let note of notes) {
+      data += `<img src="${note.image}"/>\n`
       data += `\`\`\`timestamp
 ${secondsToTime(note.timestamp)}
 \`\`\`
