@@ -90,23 +90,14 @@
   "searchView_tab_notes": {
     "message": "笔记"
   },
-  "footer_github_tooltip": {
-    "message": "访问 GitHub 仓库"
-  },
   "footer_management_tooltip": {
     "message": "打开管理页面"
   },
   "options_appName": {
     "message": "YiNote"
   },
-  "options_github": {
-    "message": "访问仓库"
-  },
   "options_faq": {
     "message": "FAQs"
-  },
-  "options_issues": {
-    "message": "反馈问题"
   },
   "options_bookmarks_title": {
     "message": "书签"

@@ -10,6 +10,17 @@ browser.browserAction.onClicked.addListener(tab => {
   });
 });
 
+if (chrome) {
+  chrome.commands.onCommand.addListener((command, tab) => {
+    if (command === 'toggleShow') {
+      browser.tabs.sendMessage(tab.id, { action: 'toggleShow' }).catch(e => {
+        logger.error(e);
+        browser.runtime.openOptionsPage();
+      });
+    }
+  });
+}
+
 browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
   const openOptions = options => {
     let timer;

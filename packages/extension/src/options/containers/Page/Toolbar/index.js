@@ -8,10 +8,9 @@ import {
   LocalOfferOutlined as TagIcon
 } from '@material-ui/icons';
 import {
-  EvernoteIcon,
-  GoogleDocsIcon,
   OneNoteIcon,
-  MarkdownIcon
+  MarkdownIcon,
+  ObsidianIcon
 } from '@yi-note/common/icons';
 import {
   pdf as PDFService,
@@ -96,9 +95,19 @@ const Toolbar = () => {
     });
   };
 
+  const handleObsidianExport = () => {
+    const data = MarkdownService.pagesToMarkdown([{ meta, notes }]);
+    const title = meta.title.replaceAll(/[^a-zA-Z0-9-_. ]/g, '').trim()
+    const url = 'obsidian://new?file=' +
+      encodeURI(`video-notes/${title}`) +
+      '&overwrite=true' +
+      '&content=' + encodeURIComponent(data);
+    window.open(url, '_blank');
+  };
+
   const handleExportMarkdown = () => {
     const data = MarkdownService.pagesToMarkdown([{ meta, notes }]);
-    return FileService.exportMarkdownFile(data, `yinote_${meta.title}.md`);
+    return FileService.exportMarkdownFile(data, `${meta.title}.md`);
   };
 
   const handleOpenPage = () => {
@@ -117,20 +126,9 @@ const Toolbar = () => {
           <PDFIcon />
         </IconButton>
       </Tooltip>
-      <Tooltip title={t('page.evernote.tooltip')}>
-        <IconButton
-          color="inherit"
-          onClick={handleSendNotesToService.bind(null, 'evernote')}
-        >
-          <EvernoteIcon fill="#ffffff" />
-        </IconButton>
-      </Tooltip>
-      <Tooltip title={t('page.googledocs.tooltip')}>
-        <IconButton
-          color="inherit"
-          onClick={handleSendNotesToService.bind(null, 'googledocs')}
-        >
-          <GoogleDocsIcon fill="#ffffff" />
+      <Tooltip title={t('page.obsidian.tooltip')}>
+        <IconButton color="inherit" onClick={handleObsidianExport}>
+          <ObsidianIcon fill="#ffffff" />
         </IconButton>
       </Tooltip>
       <Tooltip title={t('page.onenote.tooltip')}>

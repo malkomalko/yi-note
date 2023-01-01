@@ -90,23 +90,14 @@
   "searchView_tab_notes": {
     "message": "Notes"
   },
-  "footer_github_tooltip": {
-    "message": "Visit GitHub repository"
-  },
   "footer_management_tooltip": {
     "message": "Open management page"
   },
   "options_appName": {
     "message": "YiNote"
   },
-  "options_github": {
-    "message": "Visit Repository"
-  },
   "options_faq": {
     "message": "FAQs"
-  },
-  "options_issues": {
-    "message": "Report Issues"
   },
   "options_bookmarks_title": {
     "message": "Bookmarks"
@@ -131,6 +122,9 @@
   },
   "options_page_evernote_tooltip": {
     "message": "Send notes to Evernote"
+  },
+  "options_page_obsidian_tooltip": {
+    "message": "Send notes to Obsidian"
   },
   "options_page_googledocs_tooltip": {
     "message": "Send notes to Google Docs"

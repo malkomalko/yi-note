@@ -28,19 +28,36 @@ const Editor = () => {
     settings: { data: settings }
   } = useStoreState(state => state);
   const {
+    app: { setOpen },
     videoNotes: {
       editor: { setNote, reset },
-      edit,
-      support: { setOpen: setSupportOpen }
+      edit
     },
     page: { saveNote }
   } = useStoreActions(actions => actions);
 
-  const handleFocus = async () => {
-    if (active) {
-      return;
+  const handleKeyPress = React.useCallback((event) => {
+    if (event.key === 'Escape') {
+      reset();
+      setOpen(false);
     }
+    if (event.key === 'Enter' && event.ctrlKey) {
+      handleSave();
+      setOpen(false);
+    }
+  }, [note]);
 
+  React.useEffect(() => {
+    // attach the event listener
+    document.addEventListener('keydown', handleKeyPress);
+
+    // remove the event listener
+    return () => {
+      document.removeEventListener('keydown', handleKeyPress);
+    };
+  }, [handleKeyPress]);
+
+  const handleFocus = async () => {
     const player = await PlayerFactory.getPlayer();
     if (settings[KEY_PAUSE_VIDEO_WHEN_EDITING]) {
       player.pause();
@@ -51,7 +68,12 @@ const Editor = () => {
     edit({ timestamp, image: dataUri });
   };
 
-  const handleSave = () => {
+  const handleUnPauseVideo = async () => {
+    const player = await PlayerFactory.getPlayer();
+    player.play();
+  };
+
+  function handleSave() {
     const { content = '' } = note;
     if (content.trim()) {
       // Upsert note
@@ -60,12 +82,7 @@ const Editor = () => {
       // TODO: load count from state store
       StorageService.getStorage()
         .getNotes()
-        .then(notes => {
-          const count = notes.length;
-          if (count && count % 50 === 0) {
-            setSupportOpen(true);
-          }
-        });
+        .then(notes => {});
     }
   };
 
@@ -82,6 +99,7 @@ const Editor = () => {
           placeholder={t('editor.placeholder')}
           onChange={handleChange}
           onFocus={handleFocus}
+          onHandleUnPauseVideo={handleUnPauseVideo}
         />
       </Grid>
       {active && (

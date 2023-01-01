@@ -36,6 +36,7 @@ const NoteItem = ({ note }) => {
   const handlePlay = async () => {
     const player = await PlayerFactory.getPlayer();
     player.seek(timestamp);
+    player.play();
   };
 
   const handleEdit = () => edit(note);

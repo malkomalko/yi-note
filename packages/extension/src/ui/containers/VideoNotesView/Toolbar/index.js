@@ -20,9 +20,6 @@ const Toolbar = () => {
   const { t } = useTranslation(['notesView', 'bookmark']);
   const { id } = useStoreState(state => state.page.data);
   const {
-    videoNotes: {
-      support: { setOpen: setSupportExtensionOpen }
-    },
     page: { bookmarkPage, removePage },
     alerts: { show: showAlerts }
   } = useStoreActions(actions => actions);
@@ -41,10 +38,6 @@ const Toolbar = () => {
       action: 'open-options',
       data: { action: 'open-page', data: id }
     });
-  };
-
-  const handleOpenSupportDialog = () => {
-    setSupportExtensionOpen(true);
   };
 
   const handleSyncNotes = async () => {
@@ -94,15 +87,6 @@ const Toolbar = () => {
           </IconButton>
         </StyledIconContainer>
       )}
-      <StyledIconContainer item>
-        <IconButton
-          tooltip={t('support.tooltip')}
-          onClick={handleOpenSupportDialog}
-          color="red"
-        >
-          <SponsorIcon />
-        </IconButton>
-      </StyledIconContainer>
     </Grid>
   );
 };

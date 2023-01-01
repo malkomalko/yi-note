@@ -22,11 +22,11 @@ import {
 
 const App = () => {
   const {
-    app: { open, url },
+    app: { hidden, open, url },
     settings: { data: settings }
   } = useStoreState(state => state);
   const {
-    app: { setOpen, setUrl, setShowingAd },
+    app: { setHidden, setOpen, setUrl, setShowingAd },
     settings: { fetchSettings }
   } = useStoreActions(actions => actions);
   const history = useHistory();
@@ -75,18 +75,32 @@ const App = () => {
 
   useEffect(() => {
     // Register message listener
+    const listener = (request) => {
+      const { action } = request;
+      switch (action) {
+        case 'togglePanel':
+          setOpen(!open);
+          if (!open && hidden) {
+            setHidden(!hidden);
+          }
+          return;
+        case 'toggleShow':
+          if (open) {
+            setHidden(!hidden);
+          }
+          return;
+      }
+    };
+
     if (typeof browser !== 'undefined') {
-      browser.runtime.onMessage.addListener(request => {
-        const { action } = request;
-        switch (action) {
-          case 'togglePanel':
-            setOpen(!open);
-            return;
-        }
-      });
+      browser.runtime.onMessage.addListener(listener);
     }
+
+    return () => {
+      browser.runtime.onMessage.removeListener(listener);
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [open, hidden]);
 
   useEffect(() => {
     if (typeof browser !== 'undefined') {
@@ -118,7 +132,7 @@ const App = () => {
   }, [getPlayer, history, open, pathname]);
 
   return (
-    <StyledDrawer open={open} className={open && 'panel-shadow'}>
+    <StyledDrawer open={open} className={`${open ? 'panel-shadow' : ''} ${hidden ? 'panel-hidden' : ''}`}>
       <Grid container>
         <Header />
         <StyledViewWrapper>

@@ -5,6 +5,10 @@ const appModel = {
   setOpen: action(state => {
     state.open = !state.open;
   }),
+  hidden: true,
+  setHidden: action(state => {
+    state.hidden = !state.hidden;
+  }),
   url: window.location.href,
   setUrl: action((state, payload) => {
     state.url = payload;
