@@ -15,7 +15,6 @@ class Markdown {
 
   static pagesToMarkdown(pages) {
     const { meta, notes } = pages[0];
-    console.log(meta);
     const date = new Date().toISOString().split('T')[0];
     const topics = (meta.keywords || [])
       .map(keyword => keyword.replaceAll(/[^a-zA-Z0-9-_. ]/g, '').trim())
