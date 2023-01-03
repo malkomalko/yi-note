@@ -107,7 +107,8 @@ const Toolbar = () => {
 
   const handleExportMarkdown = () => {
     const data = MarkdownService.pagesToMarkdown([{ meta, notes }]);
-    return FileService.exportMarkdownFile(data, `${meta.title}.md`);
+    const title = meta.title.replaceAll(/[^a-zA-Z0-9-_. ]/g, '').trim()
+    return FileService.exportMarkdownFile(data, `${title}.md`);
   };
 
   const handleOpenPage = () => {
